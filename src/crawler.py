@@ -9,7 +9,7 @@ import logging
 import time
 import random
 
-class SmartRateLimiter:
+class RateLimiter:
     def __init__(self):
         self.request_times = []
         self.success_rate = 1.0
@@ -69,7 +69,7 @@ class TikiCrawler:
         self.backoff_seconds = self.config.get("backoff_seconds", [5, 10])
         self.batch_size = self.config["batch_size"]
 
-        self.rate_limiter = SmartRateLimiter()
+        self.rate_limiter = RateLimiter()
         self.request_spacer = RequestSpacer(min_interval=0.3)  
         self.ua_rotator = UserAgentRotator()
 
@@ -150,14 +150,14 @@ class TikiCrawler:
                         self.error_count["not_found"] += 1
                         return None
                     elif resp.status == 429:
-                        # 429 - rate limit, retry with smart backoff
+                        # 429 - rate limit, retry with backoff
                         last_error_type = "rate_limit"
                         self.rate_limiter.record_rate_limit()
                         
                         if attempt < self.retry:
                             #adaptive delay
                             delay = await self.rate_limiter.get_delay()
-                            logging.warning(f"429 Too Many Requests - Attempt {attempt + 1}/{self.retry + 1} - Smart delay: {delay}s")
+                            logging.warning(f"429 Too Many Requests - Attempt {attempt + 1}/{self.retry + 1} - Delay: {delay}s")
                             await asyncio.sleep(delay)
                         else:
                             # When out of retry, set rate limit flag
