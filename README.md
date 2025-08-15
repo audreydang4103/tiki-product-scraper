@@ -10,7 +10,6 @@ AN asynchronous web scraper for extracting product information from Tiki.vn. Bui
 - **Progress Tracking**: Real-time progress monitoring with detailed statistics
 - **Checkpoint System**: Resume scraping from where you left off
 - **Comprehensive Logging**: Detailed error reporting and logging
-- **Test Suite**: Full test coverage for all components
 
 ## Requirements
 
