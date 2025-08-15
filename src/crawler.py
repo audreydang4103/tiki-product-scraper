@@ -81,12 +81,12 @@ class TikiCrawler:
                 # New checkpoint format with batch progress
                 self.done_ids = set(checkpoint_data.get("done_ids", []))
                 self.last_completed_batch = checkpoint_data.get("last_completed_batch", 0)
-                print(f"📋 Resuming from checkpoint - Batch {self.last_completed_batch} completed, {len(self.done_ids)} products processed")
+                print(f"Resuming from checkpoint - Batch {self.last_completed_batch} completed, {len(self.done_ids)} products processed")
             else:
                 # Old checkpoint format (backward compatibility)
                 self.done_ids = set(checkpoint_data)
                 self.last_completed_batch = 0
-                print(f"📋 Resuming from old checkpoint - {len(self.done_ids)} products processed")
+                print(f"Resuming from old checkpoint - {len(self.done_ids)} products processed")
         else:
             self.done_ids = set()
             self.last_completed_batch = 0
@@ -305,7 +305,7 @@ class TikiCrawler:
 
         # Resume from next batch after last completed
         batch_num = self.last_completed_batch + 1
-        print(f"🚀 Starting from batch {batch_num}")
+        print(f"Starting from batch {batch_num}")
         
         for i in range(0, len(ids), self.batch_size):
             current_batch_num = (i // self.batch_size) + 1
@@ -317,6 +317,6 @@ class TikiCrawler:
             batch_ids = ids[i:i + self.batch_size]
             batch_size = len(batch_ids)
             
-            print(f"\n📦 Processing batch {current_batch_num} (resuming from checkpoint)")
+            print(f"\n Processing batch {current_batch_num} (resuming from checkpoint)")
             await self.process_batch(batch_ids, current_batch_num)
             self.save_results(current_batch_num, batch_size)
