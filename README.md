@@ -1,6 +1,6 @@
 # Tiki Product Scraper
 
-AN asynchronous web scraper for extracting product information from Tiki.vn. Built with Python and aiohttp for efficient concurrent data collection.
+An asynchronous web scraper for extracting product information from Tiki.vn. Built with Python and aiohttp for efficient concurrent data collection.
 
 ## Features
 
